@@ -1,10 +1,7 @@
 import random
 import math
-    
-'''
-Verifica se um numero gerado é primo
-'''
-def prime(n):
+   
+def isPrime(n):
     if (n == 2):
         return True
 	
@@ -21,11 +18,11 @@ Devemos escolher um número e em que 1 < e < φ(n), de forma que e seja co-primo
 REFATORAR.
 '''
 def calculateE(num): # recives totient of N as a parameter
-    
+
     def mdc(n1, n2): # compute the mdc of the totient of N and E
         rest = 1
 
-        while(n2 != 0):
+        while (n2 != 0):
             rest = n1%n2
             n1   = n2
             n2   = rest
@@ -45,12 +42,12 @@ def getRandomPrimeNumber():
     while True:
         x = random.randrange(1, 100)
 
-        if(prime(x)==True):
+        if (isPrime(x)):
             return x
 
 '''
 Função modular entre dois números
-'''
+''' ## mATAR ESSA FUNÇÃO
 def mod(a,b): # mod function
     if(a<b):
         return a
