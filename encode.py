@@ -1,6 +1,13 @@
 import random
-import math
-   
+
+def getRandomPrimeNumber():
+    randomicNumber = random.randrange(1, 100)
+
+    if (isPrime(randomicNumber)):
+        return randomicNumber
+
+    return getRandomPrimeNumber()
+
 def isPrime(n):
     if (n == 2):
         return True
@@ -10,16 +17,10 @@ def isPrime(n):
 
     return pow(2, n-1, n) == 1
 
-## Número aleatório para codificar.
-'''
-Gera um numero aleatório E, sasfazendo as condições
-Devemos escolher um número e em que 1 < e < φ(n), de forma que e seja co-primo de φ(n). Em outras palavras, queremos um e onde o MDC(φ(n), e) = 1, sendo e > 1.
+# Devemos escolher um número e em que 1 < e < φ(n), de forma que e seja co-primo de φ(n)
+def calculateE(nTotient):
 
-REFATORAR.
-'''
-def calculateE(num): # recives totient of N as a parameter
-
-    def mdc(n1, n2): # compute the mdc of the totient of N and E
+    def mdc(n1, n2):
         rest = 1
 
         while (n2 != 0):
@@ -29,51 +30,32 @@ def calculateE(num): # recives totient of N as a parameter
         return n1
 
     while True:
-        # define the range of the E 
-        e = random.randrange(2, num) # Inicio no 2 e para no num
+        # Essa lógica precisa melhorar. (todo)
+        e = random.randrange(2, nTotient)
 
-        if (mdc(num, e) == 1):
+        if (mdc(nTotient, e) == 1):
             return e
 
-'''
-Gera um numero primo aleatório
-'''
-def getRandomPrimeNumber():
-    while True:
-        x = random.randrange(1, 100)
-
-        if (isPrime(x)):
-            return x
-
-'''
-Função modular entre dois números
-''' ## mATAR ESSA FUNÇÃO
-def mod(a,b): # mod function
-    if(a<b):
-        return a
-    else:
-        c=a%b
-        return c
        
 '''
 Cifra um texto
 '''
 def encryptMessage(message, e, n): # get the words and compute the encrypt
     messageLenght = len(message)
-    i = 0
-    lista = []
     
-    while(i < messageLenght):
-        letter = message[i]
+    count = 0
+    encryptList = []
+    
+    while(count < messageLenght):
+        letter = message[count]
+        numericLetter = ord(letter)              # integer representing Unicode code
 
-        k = ord(letter)      # integer representing Unicode code
-        k = k**e
-        d = mod(k, n)
+        encryptedLetter = (numericLetter ** e % n)
+        encryptList.append(encryptedLetter)
 
-        lista.append(d)
-        
-        i = i+1
-    return lista
+        count += 1
+
+    return encryptList
 
 '''
 Descriptografa um texto criptografado
@@ -85,7 +67,7 @@ def decryptMessage(cifra,n,d):
     # texto=cifra ^ d mod n
     while i<tamanho:
         result=cifra[i]**d
-        texto=mod(result,n)
+        texto= result % n
         letra=chr(texto)
         lista.append(letra)
         i=i+1
@@ -96,11 +78,12 @@ def decryptMessage(cifra,n,d):
 Calcula a chave privada
 '''
 def buildPrivateKey(toti,e):
-    d=0
-    while(mod(d*e,toti)!=1):
-        d += 1
-    return d
+    d = 0
 
+    while(((d*e) % toti) != 1):
+        d += 1
+
+    return d
 
 ## MAIN
 if __name__=='__main__':
@@ -110,7 +93,7 @@ if __name__=='__main__':
     firstPrimeNumber = getRandomPrimeNumber()
     secondaryPrimeNumber = getRandomPrimeNumber()
 
-    # Calculando N.
+    # Calculando N. // Chave para codificar.
     n = firstPrimeNumber*secondaryPrimeNumber
     
     # compute the totient of N # totient = primo - 1
