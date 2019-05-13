@@ -132,7 +132,7 @@ if __name__=='__main__':
     firstPrimeNumber = getRandomPrimeNumber()
     secondaryPrimeNumber = getRandomPrimeNumber()
 
-    n = firstPrimeNumber*secondaryPrimeNumber
+    n        = (firstPrimeNumber * secondaryPrimeNumber)
     nTotient = (firstPrimeNumber - 1) * (secondaryPrimeNumber - 1) 
 
     e = calculateE(nTotient)
