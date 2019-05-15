@@ -24,7 +24,6 @@ def isPrime(n):
 def calculateE(nTotient):
 
     while True:
-        # Essa lógica precisa melhorar. (todo)
         e = random.randrange(2, nTotient)
 
         if (mdc(nTotient, e) == 1):
@@ -85,7 +84,63 @@ def buildPrivateKey(nTotient, e):
     return d
 
 
+def xmdc(a, b):
+    if b == 0:
+        return [1,0,a]
+    else:
+        x, y, d = xmdc(b, a%b)
+        return [y, x - (a//b) * y, d]
+
+def findPrivateKey(a, b):
+    r  = a
+    r1 = b
+    u  = 1
+    v  = 0
+    u1 = 0
+    v1 = 1
+
+    # rs = 0
+    # us = 0
+    # vs = 0
+    # q  = 0
+
+    while (r1 != 0):
+        q = r // r1
+        rs = r
+        us = u
+        vs = v
+        r = r1
+        u = u1
+        v = v1
+        r1 = rs - q * r1
+        u1 = us - q * u 
+        v1 = vs - q * v1
+
+    print('>>>>') # a = n
+
+    print(r)
+    print(v)
+    print(u)
+
+    return r
+
+
 # def mdcExtended(n1, n2, n3):
+
+#     13 : 640 = 0 com resto 13
+#     n1 : n2 = int resultado resto 13
+
+    
+#     resto = (1 * n1) - (dividendo * n2)
+
+#     3 = (1 * 640) - (49 * 13)
+#     resto = (1 * n1) - (dividendo * n2)
+
+
+#     n2 = (1 * n1) - (dividendo * n2)
+
+
+
 #     rest = 1
 
 #     while (n2 != 0):
@@ -142,8 +197,25 @@ if __name__=='__main__':
     print('Chave Pública:', publicKey)
     encryptedMessage = encryptMessage(message, e, n)
 
+    
+
     print('Mensagem Criptografada:', encryptedMessage)
+    
+    # privateKey
     privateKey = buildPrivateKey(nTotient, e)
+    privateKey2 = findPrivateKey(n, e)
+
+    x, y, d = xmdc(n, e)
+
+    print('Chave Privada 1   : ', privateKey)
+    print('Chave Privada 2 x : ', x)
+    print('Chave Privada 2 y : ', y)
+    print('Chave Privada 2 d : ', d)
+
+    # print('Chave Privada 2 : ', privateKey2)
 
     decryptedMessage = decryptMessage(encryptedMessage, n, privateKey)
+    print('Mensagem Descriptografada:', decryptedMessage)
+
+    decryptedMessage = decryptMessage(encryptedMessage, n, x)
     print('Mensagem Descriptografada:', decryptedMessage)
