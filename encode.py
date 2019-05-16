@@ -22,7 +22,6 @@ def isPrime(n):
 
 # Devemos escolher um número e em que 1 < e < φ(n), de forma que e seja co-primo de φ(n)
 def calculateE(nTotient):
-
     while True:
         e = random.randrange(2, nTotient)
 
@@ -113,10 +112,15 @@ if __name__=='__main__':
     privateKey = buildPrivateKey(nTotient, e)
     print('Chave Privada: ', privateKey)
 
+    # x, y, d = extendMdc(nTotient, e)
+    # print('Chave privada com MDC Estendido: ', y)
+    
     x, y, d = extendMdc(nTotient, e)
     print('Chave privada com MDC Estendido: ', y)
 
-    # print('Chave Privada 2 : ', privateKey2)
+    print('Chave Privada 2 : ', x)
+    print('Chave Privada 2 : ', y)
+    print('Chave Privada 2 : ', d)
 
     decryptedMessage = decryptMessage(encryptedMessage, n, privateKey)
     print('Mensagem Descriptografada:',  decryptedMessage)
@@ -124,6 +128,3 @@ if __name__=='__main__':
     if (y > 0):
         decryptedMessage2 = decryptMessage(encryptedMessage, n, y)
         print('Mensagem Descriptografada2:', decryptedMessage2)
-
-    # decryptedMessage = decryptMessage(encryptedMessage, n, x)
-    # print('Mensagem Descriptografada:', decryptedMessage)
