@@ -6,9 +6,12 @@ def getRandomPrimeNumber():
 
     if (isPrime(randomicNumber)):
         return randomicNumber
-
-    return getRandomPrimeNumber()
-
+    
+    while True:
+        randomicNumber = randomicNumber + 1
+        
+        if (isPrime(randomicNumber)):
+            return randomicNumber
 
 def isPrime(n):
     if (n == 2):
