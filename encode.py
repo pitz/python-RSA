@@ -2,7 +2,7 @@ import random
 
 
 def getRandomPrimeNumber():
-    randomicNumber = random.randrange(100000, 1000000000000)
+    randomicNumber = random.randrange(10, 10000000)
 
     if (isPrime(randomicNumber)):
         return randomicNumber
@@ -118,17 +118,42 @@ def multiplicativeInverse(e, nTotient):
 
     return previusX
 
-def breakPrivateKey(nTotient, e):
-    d = 0
+def factor(n):
+    if (n == 1):
+        return 1
+    else:    
+        theFactors = []
 
-    while(((d * e) % nTotient) != 1):
-        d += 1
+        for i in range(2, n + 1):          
+            while n % i == 0:
+                n = n/i
+                theFactors.append(i)
 
-    return d
+        return theFactors
+
+    print("Não encontrado.")
+    return -1
+
+def breakRSA(publicKey, encryptedMessage):
+    print("Quebrando a chave privada.")
+
+    n, e    = publicKey
+    nFactor = factor(n)
+
+    print('nFactor', nFactor)
+    
+    nTotient   = (nFactor[0] - 1) * (nFactor[1] - 1) 
+    privateKey = multiplicativeInverse(e, nTotient)
+    
+    print("Descriptografando mensagem com Força Bruta:")
+    print(decryptMessage(encryptedMessage, n, privateKey))
 
 def rsaTest(message):
     firstPrimeNumber     = getRandomPrimeNumber()
     secondaryPrimeNumber = getRandomPrimeNumber()
+
+    print('firstPrimeNumber: ',     firstPrimeNumber) 
+    print('secondaryPrimeNumber: ', secondaryPrimeNumber) 
 
     n        = (firstPrimeNumber * secondaryPrimeNumber)
     nTotient = (firstPrimeNumber - 1) * (secondaryPrimeNumber - 1) 
@@ -141,23 +166,26 @@ def rsaTest(message):
 
     if (message != decryptedMessage):
         print('Erro ao descriptografar a mensagem.')
+    
+    breakRSA(publicKey, encryptedMessage)
+    
+
 
 if __name__=='__main__':
     print('Iniciando testes...')
     
-    print('1')
-    rsaTest("Eduardo")
-
-    print('2')
     rsaTest("Eduardo Pitz")
 
-    print('3')
-    rsaTest("Eduardo Alberto")
+    # print('2')
+    # rsaTest("Eduardo Pitz")
 
-    print('4')
-    rsaTest("Raquel")
+    # print('3')
+    # rsaTest("Eduardo Alberto")
 
-    print('5')
-    rsaTest("Raquel Agostini")    
+    # print('4')
+    # rsaTest("Raquel")
+
+    # print('5')
+    # rsaTest("Raquel Agostini")    
 
     print('Final dos testes.')
