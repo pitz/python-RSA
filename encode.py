@@ -123,15 +123,12 @@ def factor(n):
 
     if (n == 1):
         return 1
-    else:    
-        for factor in range(2, n + 1):          
-            while n % factor == 0:
-                n = n / factor
-                factors.append(factor)
-        return factors
 
-    print("Não encontrado.")
-    return -1
+    for factor in range(2, n + 1):          
+        while n % factor == 0:
+            n = n / factor
+            factors.append(factor)
+    return factors
 
 def breakRSA(publicKey, encryptedMessage):
     print("Quebrando a chave privada.")
