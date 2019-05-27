@@ -2,7 +2,7 @@ import random
 
 
 def getRandomPrimeNumber():
-    randomicNumber = random.randrange(10, 10000000)
+    randomicNumber = random.randrange(10, 10000)
 
     if (isPrime(randomicNumber)):
         return randomicNumber
@@ -119,17 +119,16 @@ def multiplicativeInverse(e, nTotient):
     return previusX
 
 def factor(n):
+    factors = []
+
     if (n == 1):
         return 1
     else:    
-        theFactors = []
-
-        for i in range(2, n + 1):          
-            while n % i == 0:
-                n = n/i
-                theFactors.append(i)
-
-        return theFactors
+        for factor in range(2, n + 1):          
+            while n % factor == 0:
+                n = n / factor
+                factors.append(factor)
+        return factors
 
     print("Não encontrado.")
     return -1
