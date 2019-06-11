@@ -85,11 +85,6 @@ def decryptMessage(message, n, privateKey):
 # https://www.lambda3.com.br/2013/01/entendendo-de-verdade-a-criptografia-rsa-parte-iii/
 
 def multiplicativeInverse(e, nTotient):
-    # r = gcd(a,b) i = multiplicitive inverse of a mod b
-    #      or      j = multiplicitive inverse of b mod a
-
-    # Neg return values for i or j are made positive mod b or a respectively
-    # Iterateive Version is faster and uses much less stack space
     x  = 0
     y  = 1
     previusX = 1
