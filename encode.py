@@ -136,13 +136,15 @@ def factor(n):
 
 
 def factorByPollardsRho(n):
-    x = 2; y = 2; d = 1
+    x = 2
+    y = 2
+    d = 1
     f = lambda x: (x**2 + 1) % n
 
     while d == 1:
-        x = f(x); y = f(f(y))
+        x = f(x)
+        y = f(f(y))
         d = math.gcd(abs(x-y), n)
-        # print('d:', d)
 
     if d != n: 
         return [d, n // d]
@@ -150,8 +152,6 @@ def factorByPollardsRho(n):
 
 def factorBreakingRSA(publicKey, encryptedMessage):
     initialTime = datetime.now()
-    print("[>>>>>>] factorBreakingRSA()")
-    print("[>>>>>>] initialTime: ", initialTime)
 
     n, e     = publicKey
     nFactor  = factor(n)
@@ -159,18 +159,15 @@ def factorBreakingRSA(publicKey, encryptedMessage):
     dBroken  = multiplicativeInverse(e, nTotient)
 
     decryptedMessage = decryptMessage(encryptedMessage, n, dBroken)
-
     finalTime = datetime.now()
-    print("[<<<<<<] finalTime..: ", finalTime)
-    print("[<<<<<<] difference.: ", finalTime-initialTime)
-    print("[<<<<<<] factorBreakingRSA() ")
+
+    print("[..] Tempo para fatoração utilizando factorBreakingRSA(): ", finalTime-initialTime)
+
     return decryptedMessage
     
 
 def factorByPollardsRhoBreakingRSA(publicKey, encryptedMessage):
     initialTime = datetime.now()
-    print("[>>>>>>] factorByPollardsRhoBreakingRSA() ")
-    print("[>>>>>>] initialTime: ", initialTime)
 
     n, e     = publicKey
     nFactor  = factorByPollardsRho(n)
@@ -178,28 +175,22 @@ def factorByPollardsRhoBreakingRSA(publicKey, encryptedMessage):
     dBroken  = multiplicativeInverse(e, nTotient)
 
     decryptedMessage = decryptMessage(encryptedMessage, n, dBroken)
-
     finalTime = datetime.now()
-    print("[<<<<<<] finalTime..: ", finalTime)
-    print("[<<<<<<] difference.: ", finalTime-initialTime)
-    print("[<<<<<<] factorByPollardsRhoBreakingRSA() ")
+    
+    print("[..] Tempo para fatoração utilizando factorByPollardsRhoBreakingRSA(): ", finalTime-initialTime)
+    
     return decryptedMessage
 
 
 def rsaBrokenTest(publicKey, encryptedMessage, decryptedMessage):
-    print("[......]")
     brokenRsaDecryptedMessageA = factorBreakingRSA(publicKey, encryptedMessage)
-    print("[......]")
     brokenRsaDecryptedMessageB = factorByPollardsRhoBreakingRSA(publicKey, encryptedMessage)
-    print("[......]")
 
     if (brokenRsaDecryptedMessageA == decryptedMessage):
-        print('O método factorBreakingRSA() se mostrou eficaz como algoritmo de força bruta para descriptografar a mensagem.')
-    
-    print("[......]")
+        print('[..] O método factorBreakingRSA() se mostrou eficaz como algoritmo de força bruta para descriptografar a mensagem.')
 
     if (brokenRsaDecryptedMessageB == decryptedMessage):
-        print('O método factorByPollardsRhoBreakingRSA() se mostrou eficaz como algoritmo de força bruta para descriptografar a mensagem.')
+        print('[..] O método factorByPollardsRhoBreakingRSA() se mostrou eficaz como algoritmo de força bruta para descriptografar a mensagem.')
 
 
 def rsaTest(message):
@@ -219,11 +210,9 @@ def rsaTest(message):
 
 
 if __name__=='__main__':
-    print('...')
-    print('...')
-    print('...')
-    
-    rsaTest("is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-    rsaTest("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).")
-    rsaTest("There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which .")
-    rsaTest("The math module is a standard module in Python and is always available. To use mathematical functions under this module, you have to import the module using import math . It gives access to the underlying C library functions.")
+    print('.')
+    print('.')
+    print('.')
+
+    message = input("Informe aqui a sua mensagem: ")
+    rsaTest(message)
