@@ -9,3 +9,6 @@ Um agradecimento ao artigo apresentado pela Lambda3 que serviu como base para o 
 
 ### Artigo
 Publiquei esse [artigo](https://www.notion.so/pitzdashboard/Artigo-RSA-be1afe6759b347a585729a0cf47656b8) aqui sobre a criptografia RSA que foi desenvolvida neste repositório.
+
+### Todo
+Melhorar método euleriano.  
